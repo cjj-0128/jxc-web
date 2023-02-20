@@ -1,26 +1,16 @@
+import '@/api/interceptor';
 import React from 'react';
-import './index.css';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ReactDom from 'react-dom';
-import useRoute from '@/routes';
-import Home from './pages/home';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import './index.css';
+import PageLayout from './layout';
 
-function Index(){
-  const [routes] = useRoute();
-  
+
+function Index(){  
   return(
     <HashRouter>
       <Routes>
-        <Route path='/' element={<Home></Home>}></Route>
-        {/* {routes.map((route, index) => {
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              element={<route.component />}
-            />
-          );
-        })} */}
+        <Route path='/*' element={<PageLayout></PageLayout>}></Route>
       </Routes>
    </HashRouter>
   )
