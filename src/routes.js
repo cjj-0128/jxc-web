@@ -40,8 +40,10 @@ const useRoute = (rawUserInfo) => {
     const permissionRoutes = useMemo(() => {
       return routes;
     }, []);
+
+    const defaultRoute = '/prod-management'
   
-    return [permissionRoutes,menus];
+    return [permissionRoutes,menus,defaultRoute];
   };
   
   export default useRoute;

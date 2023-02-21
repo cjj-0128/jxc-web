@@ -1,7 +1,7 @@
 import useRoute from '@/routes';
 import { Layout, Menu } from 'antd';
 import _ from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import './index.scss';
 const { Header, Content, Footer, Sider } = Layout;
@@ -10,9 +10,9 @@ const { Header, Content, Footer, Sider } = Layout;
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ()=>{
     const navigate = useNavigate();
-    const [routes,menus] = useRoute();
+    const [routes,menus,defaultRoute] = useRoute();
     const [openKeys, setOpenKeys] = useState(['/prod','/prod-management']);
-    const [selectedKey,setSelectedKey] = useState(['/prod/prod-management'])
+    const [selectedKey,setSelectedKey] = useState(['/prod-management'])
 
     const renderMenus = useMemo(() => {
         const newMenus = _.cloneDeep(menus);
@@ -21,18 +21,17 @@ export default ()=>{
 
     const onClickMenuItem = (e)=>{
         const key = e.key;
-        console.log(key)
-        navigate('/prod'+key)
+        setOpenKeys(['/prod',key])
+        navigate(key)
     }
 
     useEffect(()=>{
-        console.log(routes)
         setSelectedKey(openKeys)
     },[openKeys])
 
     const defaultNavigate = useMemo(() => {
-        return <Navigate to={'/prod/prod-management'} />;
-      }, []);
+        return <Navigate to={defaultRoute} />;
+      }, [defaultRoute]);
 
     return(
         <>
@@ -52,18 +51,20 @@ export default ()=>{
                 </Sider>
 
                 <div className='mainContainer'>
-                     <Routes>
-                        {routes.map((route, index) => {
-                            return (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={<route.component />}
-                            />
-                            );
-                        })}
-                        <Route path="*" element={defaultNavigate} />
-                     </Routes>
+                    <Suspense fallback={<div>加载中...</div>}>
+                        <Routes>
+                            {routes.map((route, index) => {
+                                return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={<route.component/>}
+                                />
+                                );
+                            })}
+                            <Route path="*" element={defaultNavigate} />
+                        </Routes>
+                    </Suspense>
                 </div>
             </Layout>
         </>
