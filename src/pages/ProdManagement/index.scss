@@ -9,6 +9,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 16px;
+        justify-content: flex-end;
     }
 
     .jxc-table{
@@ -21,4 +22,8 @@
         align-items: center;
         justify-content: flex-end;
     }   
+
+    .form-content{
+        padding: 30px 16px 0;
+    }
 }
