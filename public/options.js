@@ -1,1 +1,1 @@
-window.url = 'http://116.233.120.95:888/api/jxc'
+window.url = 'http://116.232.101.55:888/api/jxc'
