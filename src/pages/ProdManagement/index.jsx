@@ -74,6 +74,8 @@ export default ()=>{
             }
         ]
     })
+    const [type,setType] = useState('')
+
 
     useEffect(()=>{
         searchCargoKind()
@@ -106,6 +108,7 @@ export default ()=>{
                         }
                     ],
                 })
+                setType('edit')
                 setIsShow(true)      
             }
         })
@@ -163,6 +166,7 @@ export default ()=>{
 
     useEffect(()=>{
         if(!isShow){
+            setType('')
             setFormData({
                 cargo_kind:{
                     ck_name:'',
@@ -245,7 +249,10 @@ export default ()=>{
                     onClick={searchCargoKind}
                     style={{marginRight:16}}>搜索</Button>
                     {/* <div style={{flex:1}}></div> */}
-                    <Button type="primary" onClick={()=>setIsShow(true)}>新增货品种类</Button>
+                    <Button type="primary" onClick={()=>{
+                        setIsShow(true)
+                        setType('add')
+                        }}>新增货品种类</Button>
                 </header>
 
                 <div className="jxc-table">
